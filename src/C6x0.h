@@ -43,7 +43,7 @@ public:
       if (0x201 <= id && id < 0x201 + 8) {
         Param &param = params_[id - 0x201];
         int16_t position = static_cast<int16_t>(msg.data[0] << 8 | msg.data[1]);
-        if (param.prev_position == INT32_MAX) {
+        if (param.prev_position != INT16_MAX) {
           int16_t delta = position - param.prev_position;
           if (delta > 4096) {
             delta -= 8192;
@@ -119,7 +119,7 @@ public:
 private:
   struct Param {
     int64_t position = 0;
-    int32_t prev_position = INT32_MAX;
+    int16_t prev_position = INT16_MAX;
     int16_t rpm = 0;
     int16_t current_raw = 0;
     int16_t current_ref_raw = 0;
